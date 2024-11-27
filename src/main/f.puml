@@ -1,0 +1,34 @@
+@startuml
+title Физическая инфраструктура системы
+
+node "Render: Приложение" {
+    skinparam node {
+        BackgroundColor #E3F2FD
+        BorderColor #0288D1
+    }
+    component "Spring Boot + Thymeleaf" {
+        [Spring Boot] --> [Thymeleaf] : Генерация страниц
+        [Spring Boot] --> [PostgreSQL Connector] : Подключение к базе данных
+    }
+}
+
+cloud "Render: PostgreSQL Database" {
+    skinparam cloud {
+        BackgroundColor #FFEBEE
+        BorderColor #D32F2F
+    }
+    database "PostgreSQL" <<database>> {
+    }
+}
+
+[Spring Boot] --> [PostgreSQL] : Подключение к базе данных через HTTPS
+
+cloud "Клиент" {
+    skinparam cloud {
+        BackgroundColor #C8E6C9
+        BorderColor #388E3C
+    }
+    [Web Browser] --> [Thymeleaf] : HTTP-запросы
+}
+
+@enduml

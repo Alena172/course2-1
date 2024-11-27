@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="/static/css/teacher-courses-list.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <title>Курсы преподавателя</title>
+</head>
+<body>
+<a href="/logout" class="back-arrow">
+  <i class="fas fa-arrow-left"></i> Выйти
+</a>
+<header class="header">
+    <h1 class="title">Мои курсы</h1>
+</header>
+
+<main class="container">
+  <div th:if="${courses.empty}" class="no-courses">
+    <p>У вас пока нет курсов.</p>
+  </div>
+  <div th:if="${!courses.empty}" class="courses-grid">
+    <a th:each="course : ${courses}" th:href="@{/teacher/courses/{id}/lessons(id=${course.id})}" class="course-card">
+      <div class="course-image-wrapper">
+        <img th:src="${course.image}" alt="Изображение курса" class="course-image">
+      </div>
+      <h2 class="course-title" th:text="${course.title}"></h2>
+    </a>
+  </div>
+</main>
+</body>
+</html>

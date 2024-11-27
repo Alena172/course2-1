@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Личный кабинет</title>
+  <link href="/static/css/myaccount.css" rel="stylesheet">
+</head>
+<body>
+<header>
+  <h1>Личный кабинет</h1>
+  <a class='nav' href="/courses">Все курсы</a> | <a class='nav'  href="/logout">Выйти</a>
+</header>
+
+<section class="profile-section">
+  <h2>Профиль</h2>
+  <div class="profile-info">
+    <p><strong>Имя пользователя:</strong> <span th:text="${user.name} + ' ' + ${user.surname}"></span></p>
+    <p><strong>Email:</strong> <span th:text="${user.email}"></span></p>
+    <p><strong>Телефон:</strong> <span th:text="${user.phone}"></span></p>
+  </div>
+</section>
+
+<section class="courses-section">
+  <h2>Мои курсы</h2>
+  <div th:if="${enrollments.isEmpty()}" class="no-courses">
+    <p>Вы еще не записаны ни на один курс.</p>
+  </div>
+  <ul th:if="${!enrollments.isEmpty()}" class="lessons-list">
+    <li th:each="enrollment : ${enrollments}" class="lesson-item">
+      <a th:href="@{/myaccount/courses/{courseId}/lessons(courseId=${enrollment.course.id})}" class="course-card-link">
+        <img th:src="@{${enrollment.course.image}}" alt="Изображение курса" class="course-image">
+        <div class="lesson-content">
+          <h3 th:text="${enrollment.course.title}"></h3>
+          <p th:text="${enrollment.course.description}"></p>
+<!--          <p class="lesson-status" th:text="${enrollment.status}"></p>-->
+          <div class="progress-bar">
+            <span th:style="'width: ' + (${enrollment.progress} != null ? ${enrollment.progress} : 0) + '%'"></span>
+          </div>
+        </div>
+      </a>
+      <!-- Ссылка на сертификат, всегда присутствует, но скрыта, если курс не завершен -->
+      <div th:classappend="${enrollment.progress == 100 ? 'show-certificate' : 'hide-certificate'}">
+        <a th:href="@{/certificate/{courseId}/{userId}(courseId=${enrollment.course.id}, userId=${user.id})}" target="_blank" class="certificate-link">
+          Скачать сертификат
+        </a>
+      </div>
+    </li>
+  </ul>
+</section>
+</body>
+</html>

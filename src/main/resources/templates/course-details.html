@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${course.title}">Детали курса</title>
+    <link href="/static/css/details.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+<header>
+    <h1 th:text="${course.title}">Детали курса</h1>
+</header>
+
+<a href="/courses" class="back-arrow">
+    <i class="fas fa-arrow-left"></i> Назад
+</a>
+
+<main>
+    <div class="course-container">
+        <!-- Изображение курса -->
+        <div class="course-image">
+            <img th:src="${course.image}" alt="Фото курса" />
+        </div>
+
+        <!-- Информация о курсе -->
+        <div class="course-details">
+            <p style="text-align: justify;">
+                <strong>Описание:</strong> <span th:text="${course.description}"></span>
+            </p>
+            <p><strong>Категория:</strong> <span th:text="${course.category}"></span></p>
+            <p><strong>Преподаватель:</strong>
+                <span th:text="${course.instructor != null ? course.instructor.name + ' ' + course.instructor.surname : 'Не указан'}"></span>
+            </p>
+            <p><strong>Продолжительность:</strong> <span th:text="${course.duration}"></span> месяцев</p>
+            <p><strong>Цена:</strong> <span th:text="${course.price}"></span> руб.</p>
+        </div>
+
+        <!-- Кнопка записи на курс -->
+        <form th:if="${enrollment == null || #strings.trim(enrollment.status) != 'ACTIVE'}"
+              th:action="@{/enroll/{courseId}(courseId=${course.id})}" method="post" class="enroll-form">
+            <button type="submit" class="btn" th:disabled="${enrollment != null && #strings.trim(enrollment.status) == 'ACTIVE'}">
+                Записаться на курс
+            </button>
+        </form>
+
+        <!-- Если пользователь уже записан на курс с активным статусом, отображаем сообщение -->
+        <span class="enrollment-status" th:if="${enrollment != null && #strings.trim(enrollment.status) == 'ACTIVE'}">
+    Вы уже записаны на этот курс.
+</span>
+    </div>
+</main>
+
+</body>
+</html>

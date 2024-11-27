@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Курсы</title>
+    <link href="/static/css/courses.css" rel="stylesheet">
+</head>
+<body>
+<!-- Заголовок страницы -->
+<header>
+    <h1>Список курсов</h1>
+</header>
+
+<!-- Ссылка на страницу "Мои курсы" -->
+<nav>
+    <a href="/myaccount" class="my-courses-link">Мои курсы</a>
+</nav>
+
+<!-- Секция с курсами -->
+<section class="courses-list">
+    <!-- Проходим по курсам и выводим только те, у которых статус ACTIVE -->
+    <div th:each="course : ${courses}" class="course-item" th:if="${#strings.trim(course.status) == 'ACTIVE'}">
+        <h2><a class="item-title" th:href="@{/course-details/{id}(id=${course.id})}" th:text="${course.title}"></a></h2>
+        <p>Продолжительность: <span th:text="${course.duration}">0</span> месяцев</p>
+
+        <!-- Добавление изображения -->
+        <div class="course-image">
+            <img th:src="@{${course.image}}" alt="Изображение курса" class="course-img">
+        </div>
+
+        <!-- Кнопка записи на курс -->
+        <a th:href="@{/course-details/{id}(id=${course.id})}" class="btn">Подробнее</a>
+    </div>
+</section>
+</body>
+</html>

@@ -1,0 +1,190 @@
+'@startuml
+''https://plantuml.com/component-diagram
+'
+'
+'package "Some Group" {
+'  HTTP - [First Component]
+'  [Another Component]
+'}
+'
+'node "Other Groups" {
+'  FTP - [Second Component]
+'  [First Component] --> FTP
+'}
+'
+'cloud {
+'  [Example 1]
+'}
+'
+'
+'database "MySql" {
+'  folder "This is my folder" {
+'    [Folder 3]
+'  }
+'  frame "Foo" {
+'    [Frame 4]
+'  }
+'}
+'
+'
+'[Another Component] --> [Example 1]
+'[Example 1] --> [Folder 3]
+''[Folder 3] --> [Frame 4]
+'@enduml
+
+'@startuml
+'package "Frontend" {
+'  [Web Client] as WebClient
+'  [User Interface (Thymeleaf)] as ThymeleafUI
+'}
+'
+'package "Controller" {
+'  [CourseController] as CourseCtrl
+'  [UserController] as UserCtrl
+'  [LessonController] as LessonCtrl
+'}
+'
+'package "Service" {
+'  [CourseService] as CourseSrv
+'  [UserService] as UserSrv
+'  [LessonService] as LessonSrv
+'}
+'
+'package "Repository" {
+'  [CourseRepository] as CourseRepo
+'  [UserRepository] as UserRepo
+'  [LessonRepository] as LessonRepo
+'}
+'
+'package "Database" {
+'  [PostgreSQL Database]
+'  [Course Table] as CourseTable
+'  [User Table] as UserTable
+'  [Lesson Table] as LessonTable
+'}
+'
+'' Взаимодействия
+'WebClient --> ThymeleafUI : Uses
+'ThymeleafUI --> CourseCtrl : Sends Request
+'ThymeleafUI --> UserCtrl : Sends Request
+'ThymeleafUI --> LessonCtrl : Sends Request
+'
+'CourseCtrl --> CourseSrv : Calls
+'UserCtrl --> UserSrv : Calls
+'LessonCtrl --> LessonSrv : Calls
+'
+'CourseSrv --> CourseRepo : Calls
+'UserSrv --> UserRepo : Calls
+'LessonSrv --> LessonRepo : Calls
+'
+'CourseRepo --> CourseTable : Fetches Data
+'UserRepo --> UserTable : Fetches Data
+'LessonRepo --> LessonTable : Fetches Data
+'
+'@enduml
+
+'@startuml
+'' Устанавливаем стиль диаграммы
+'skinparam component {
+'    BackgroundColor #F0F8FF
+'    BorderColor #2196F3
+'    FontSize 14
+'    FontColor #000
+'    Padding 10
+'}
+'skinparam package {
+'    BackgroundColor #BBDEFB
+'    BorderColor #1976D9
+'    Padding 10
+'}
+'skinparam database {
+'    BackgroundColor #C8E6C9
+'    BorderColor #388E3C
+'    FontColor #2C6F2E
+'}
+'
+'' Устанавливаем направление расположения компонентов
+'top to bottom direction
+'
+'' Определяем пакеты для группировки компонентов
+'package "Frontend (HTML, Thymeleaf)" {
+'  [HTML Templates] as HTML
+'  [CSS + Font Awesome] as CSS
+'}
+'
+'package "Backend (Spring Boot)" {
+'  [Controller (Spring MVC)] as Controller
+'  [Service Layer] as Service
+'  [Repository Layer] as Repository
+'  [Model Layer] as Model
+'}
+'
+'database "PostgreSQL" {
+'  [Database] as DB
+'}
+'
+'' Взаимодействие между компонентами с аккуратными стрелками
+'
+'HTML -down-> Controller : Отправляет HTTP-запросы\n(например, просмотр курса)
+'CSS -down-> HTML : Предоставляет стили и иконки
+'
+'Controller -down-> Service : Обрабатывает запросы\nи вызывает бизнес-логику
+'Service -down-> Repository : Взаимодействует\n с репозиториями\nдля получения/сохранения \nданных
+'Repository -down-> DB : Запросы к базе данных\n(PostgreSQL)
+'
+'Repository -down-> Model : Работает с сущностями\n(курсы, пользователи, уроки)
+'Service -down-> Model : Обрабатывает данные\nс помощью сущностей
+'
+'@enduml
+
+@startuml
+' Устанавливаем стиль диаграммы
+skinparam component {
+    BackgroundColor #F0F8FF
+    BorderColor #2196F3
+    FontSize 14
+    FontColor #000
+    Padding 10
+}
+skinparam package {
+    BackgroundColor #BBDEFB
+    BorderColor #1976D9
+    Padding 10
+}
+skinparam database {
+    BackgroundColor #C8E6C9
+    BorderColor #388E3C
+    FontColor #2C6F2E
+}
+
+' Устанавливаем направление расположения компонентов
+top to bottom direction
+
+' Определяем пакеты для группировки компонентов
+package "Frontend (HTML, Thymeleaf)" {
+  [HTML Templates] as HTML
+  [CSS + Font Awesome] as CSS
+}
+
+package "Backend (Spring Boot)" {
+  [Controller (Spring MVC)] as Controller
+  [Service Layer] as Service
+  [Repository Layer] as Repository
+  [Model Layer] as Model
+}
+
+database "PostgreSQL" {
+  [Database] as DB
+}
+
+' Взаимодействие между компонентами с аккуратными стрелками
+
+HTML -down-> Controller : Отправляет HTTP-запросы\n(например, просмотр курса)
+CSS -down-> HTML : Предоставляет стили и иконки
+
+Controller -down-> Service : Обрабатывает запросы\nи вызывает бизнес-логику
+Service -down-> Repository : Взаимодействует с репозиториями\nдля получения и обработки данных
+Repository -down-> DB : Запросы к базе данных\n(PostgreSQL)
+
+Repository -down-> Model : Использует сущности \nдля выполнения CRUD операций
+@enduml

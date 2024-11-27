@@ -1,0 +1,47 @@
+@startuml
+' Устанавливаем стиль для красивого отображения
+skinparam backgroundColor White
+skinparam actor {
+    BackgroundColor #EAEAEA
+    BorderColor Black
+    FontSize 14
+}
+skinparam usecase {
+    BackgroundColor White
+    BorderColor Black
+    FontSize 12
+}
+
+' Определяем актеров
+actor Администратор as Admin
+actor Преподаватель as Teacher
+actor Студент as Student
+
+' Определяем действия
+usecase "Управление пользователями" as UC_ManageUsers
+usecase "Управление курсами" as UC_ManageCourses
+usecase "Создание и редактирование курсов" as UC_CreateEditCourses
+usecase "Управление уроками" as UC_ManageLessons
+usecase "Просмотр курсов" as UC_ViewCourses
+usecase "Запись на курс" as UC_EnrollCourse
+usecase "Прохождение уроков" as UC_CompleteLessons
+usecase "Получение сертификатов" as UC_GetCertificates
+
+' Связи между актерами и действиями
+Admin --> UC_ManageUsers
+Admin --> UC_ManageCourses
+
+Teacher --> UC_CreateEditCourses
+Teacher --> UC_ManageLessons
+
+Student --> UC_ViewCourses
+Student --> UC_EnrollCourse
+Student --> UC_CompleteLessons
+Student --> UC_GetCertificates
+
+' Общие связи между действиями
+UC_ManageCourses --> UC_CreateEditCourses : <<extend>>
+UC_CreateEditCourses --> UC_ManageLessons : <<include>>
+UC_CompleteLessons --> UC_GetCertificates : <<include>>
+
+@enduml

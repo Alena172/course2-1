@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <link href="/static/css/teacher-courses-lessons.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <title>Уроки курса</title>
+</head>
+<body>
+<a href="/teacher/courses" class="back-arrow">
+  <i class="fas fa-arrow-left"></i> Назад
+</a>
+<header class="header">
+  <h1 th:text="'Уроки для курса: ' + ${course.title}"></h1>
+</header>
+<div class="container">
+  <main class="main-content">
+    <div class="lesson-list">
+      <!-- Цикл по урокам -->
+      <div th:each="lesson : ${lessons}" class="lesson-item">
+        <!-- Вся карточка теперь является ссылкой -->
+        <a th:href="@{'/teacher/courses/' + ${course.id} + '/lessons/' + ${lesson.id} + '/edit'}" class="lesson-link">
+          <div class="lesson-content">
+            <span th:text="${lesson.title}" class="lesson-title"></span>
+          </div>
+        </a>
+
+        <!-- Форма для удаления урока, которая не является частью ссылки -->
+        <form th:action="@{'/teacher/courses/' + ${course.id} + '/lessons/' + ${lesson.id} + '/delete'}" method="post" th:object="${lesson}" class="delete-form">
+          <!-- Кнопка удаления урока с условием для деактивации -->
+          <button
+                  type="submit"
+                  th:disabled="${#strings.trim(course.status) == 'ACTIVE'}"
+                  onclick="return confirm('Вы уверены, что хотите удалить этот урок?');"
+                  class="delete-button">
+            Удалить
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Ссылка на создание нового урока -->
+    <a th:href="@{'/teacher/courses/' + ${course.id} + '/lessons/new'}" class="create-new-lesson">Создать новый урок</a>
+  </main>
+</div>
+</body>
+</html>

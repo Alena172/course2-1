@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title th:text="${lesson.id != null ? 'Редактирование урока' : 'Создание нового урока'}"></title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="/static/css/lesson-create.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container">
+  <h1 th:text="${lesson.id != null ? 'Редактирование урока: ' + lesson.title : 'Создание нового урока для курса: ' + course.title}"></h1>
+
+  <form th:action="@{${lesson.id != null ? '/teacher/courses/' + course.id + '/lessons/' + lesson.id : '/teacher/courses/' + course.id + '/lessons'}}" method="post">
+    <div class="form-section">
+      <label class = "title" for="title">Название урока:</label>
+      <input type="text" id="title" name="title" th:value="${lesson.title}" th:readonly="${lesson.id != null}" class="input-field" required />
+    </div>
+
+    <h2>Добавьте блоки</h2>
+    <div id="blocks">
+      <div class="block" th:each="block : ${lesson.blocks}">
+        <div class="form-section">
+          <label for="blockTitle">Заголовок блока:</label>
+          <input id="blockTitle" type="text" name="blockTitle" th:value="${block.title}" placeholder="Введите заголовок блока" class="input-field"/>
+        </div>
+
+        <div class="form-section">
+          <label for="blockType">Тип блока:</label>
+          <select id="blockType" name="blockType" class="input-field" required>
+            <option value="TEXT" th:selected="${block.type == 'TEXT'}">Текст</option>
+            <option value="IMAGE" th:selected="${block.type == 'IMAGE'}">Изображение</option>
+            <option value="VIDEO" th:selected="${block.type == 'VIDEO'}">Видео</option>
+          </select>
+        </div>
+
+        <div class="form-section">
+          <label for="blockContent">Содержимое блока:</label>
+          <textarea name="blockContent" placeholder="Введите содержимое блока" class="editable-content" required th:text="${block.content}"></textarea>
+        </div>
+
+        <div class="removeBlockForm">
+          <button type="button" class="button button-danger" onclick="removeBlock(this)">Удалить блок</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="addBlockWrapper">
+      <button type="button" id="addBlock">+</button>
+    </div>
+
+    <div class="form-section">
+      <button type="submit" class="button">Сохранить урок</button>
+    </div>
+  </form>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Применяем autoResize ко всем textarea на странице
+    const textareas = document.querySelectorAll('.editable-content');
+    textareas.forEach(textarea => {
+      autoResize(textarea);  // Подгоняем высоту сразу при загрузке страницы
+    });
+  });
+
+  document.getElementById('addBlock').addEventListener('click', function() {
+    var blockDiv = document.createElement('div');
+    blockDiv.classList.add('block');
+
+    blockDiv.innerHTML = `
+      <div class="form-section">
+        <label for="blockTitle">Заголовок блока:</label>
+        <input type="text" name="blockTitle" placeholder="Введите заголовок блока" class="input-field" required />
+      </div>
+      <div class="form-section">
+        <label for="blockType">Тип блока:</label>
+        <select name="blockType" class="input-field" required>
+          <option value="TEXT">Текст</option>
+          <option value="IMAGE">Изображение</option>
+          <option value="VIDEO">Видео</option>
+        </select>
+      </div>
+      <div class="form-section">
+        <label for="blockContent">Содержимое блока:</label>
+        <textarea name="blockContent" placeholder="Введите содержимое блока" class="editable-content" required></textarea>
+      </div>
+      <div class="removeBlockForm">
+        <button type="button" class="button button-danger" onclick="removeBlock(this)">Удалить блок</button>
+      </div>
+    `;
+
+    document.getElementById('blocks').appendChild(blockDiv);
+    // Применяем autoResize ко вновь добавленному textarea
+    autoResize(blockDiv.querySelector('.editable-content'));
+  });
+
+  function removeBlock(button) {
+    var blockDiv = button.closest('.block');
+    blockDiv.remove();
+  }
+
+  // Функция для автоматического изменения высоты textarea
+  document.addEventListener('input', function (event) {
+    if (event.target.classList.contains('editable-content')) {
+      autoResize(event.target);
+    }
+  });
+
+  function autoResize(textarea) {
+    textarea.style.height = 'auto'; // Сбрасываем высоту перед расчетом
+    textarea.style.height = textarea.scrollHeight + 'px'; // Устанавливаем высоту равной высоте содержимого
+  }
+</script>
+
+
+</body>
+</html>

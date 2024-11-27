@@ -1,0 +1,44 @@
+@startuml
+title Диаграмма компонентов системы
+
+package "Аутентификация" {
+    component UserController
+    interface "Регистрация и вход" as AuthAPI
+    UserController --> AuthAPI
+    component UserService
+    UserController --> UserService
+}
+
+package "Управление пользователями" {
+    component AdminController
+    interface "API пользователей" as UserAPI
+    AdminController --> UserAPI
+    component UserService
+    AdminController --> UserService
+}
+
+package "Управление курсами" {
+    component CourseController
+    interface "API курсов" as CourseAPI
+    CourseController --> CourseAPI
+    component CourseService
+    CourseController --> CourseService
+
+    component AdminController
+    AdminController --> CourseService
+
+    component TeacherController
+    interface "API уроков" as LessonAPI
+    TeacherController --> LessonAPI
+    TeacherController --> CourseService
+}
+
+package "Запись на курсы" {
+    component EnrollmentController
+    interface "Запись и сертификаты" as EnrollmentAPI
+    EnrollmentController --> EnrollmentAPI
+    component EnrollmentService
+    EnrollmentController --> EnrollmentService
+}
+
+@enduml

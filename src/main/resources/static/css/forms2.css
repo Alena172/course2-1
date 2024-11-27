@@ -1,0 +1,141 @@
+/* Общие стили для страницы */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #212529; /* Темный фон страницы */
+    color: #f1f1f1; /* Светлый текст */
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2 {
+    color: #f39c12; /* Оранжевый цвет для заголовков */
+}
+
+.card {
+    background-color: #333; /* Темный фон для карточки */
+    border-radius: 10px; /* Закругленные углы */
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Тень для карточки */
+}
+
+form h2 {
+    color: #f39c12; /* Оранжевый цвет заголовков внутри форм */
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Стили для контейнера кнопки */
+.d-grid {
+    display: grid;
+    justify-items: center; /* Центрирует содержимое по горизонтали */
+    gap: 10px; /* Отступы между элементами */
+}
+
+/* Кнопка */
+.btn {
+    font-size: 1.2rem;
+    width: 50%; /* Устанавливаем ширину кнопки на 50% от родительского контейнера */
+    max-width: 250px; /* Ограничиваем максимальную ширину кнопки */
+    color: #f39c12; /* Оранжевый цвет текста */
+    border: 2px solid #f39c12; /* Оранжевая окантовка */
+    border-radius: 30px; /* Закругленные углы */
+    padding: 10px;
+    transition: all 0.3s ease; /* Плавный переход для стилей при наведении */
+}
+
+.btn:hover {
+    background-color: #f39c12; /* Оранжевая кнопка при наведении */
+    color: white; /* Белый текст при наведении */
+    border-color: #f39c12; /* Оранжевая окантовка при наведении */
+    cursor: pointer; /* Указатель для кнопки */
+}
+
+.btn:focus {
+    outline: none; /* Убираем обводку при фокусе */
+}
+
+
+/* Стили для формы ввода */
+input[type="email"], input[type="password"], input[type="text"] {
+    font-size: 1rem;
+    padding: 10px;
+    background-color: #444; /* Темный фон для полей ввода */
+    color: #f1f1f1; /* Светлый текст */
+    border: 1px solid #666; /* Тонкая граница */
+    border-radius: 5px; /* Закругленные углы */
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+input[type="email"]:focus, input[type="password"]:focus, input[type="text"]:focus {
+    border-color: #f39c12; /* Оранжевая граница при фокусе */
+    background-color: #555; /* Чуть светлее фон при фокусе */
+}
+
+/* Стили для ошибок */
+.text-danger {
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #e74c3c; /* Красный цвет для ошибок */
+}
+
+.text-center {
+    text-align: center; /* Центрирование текста */
+}
+
+/* Стили для ссылок */
+a {
+    text-decoration: none;
+    color: #f39c12; /* Оранжевый цвет для ссылок */
+    font-size: 0.9rem;
+}
+
+a:hover {
+    color: white; /* Белый цвет при наведении */
+}
+
+/* Стили для контейнера форм */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Полная высота экрана */
+}
+
+/* Стили для контейнера ошибок */
+.mt-3 {
+    margin-top: 1rem;
+}
+
+/* Мелкие элементы, такие как ссылки для переключения форм */
+small {
+    font-size: 0.8rem;
+}
+
+/* Стили для отображения кнопок и ссылок при переключении форм */
+#loginForm, #registerForm {
+    display: none;
+}
+
+#loginForm.active, #registerForm.active {
+    display: block;
+}
+
+/* Убираем нижний маргин у полей ввода, если нет ошибок */
+input:not(.error):last-of-type {
+    margin-bottom: 10px;
+}
+
+/* Стили для кнопок входа и регистрации */
+button#loginBtn, button#registerBtn {
+    background-color: #6c757d; /* Серая кнопка */
+    color: #f39c12; /* Оранжевый цвет текста */
+    border: 2px solid #f39c12; /* Оранжевая окантовка */
+}
+
+button#loginBtn:hover, button#registerBtn:hover {
+    background-color: #f39c12; /* Оранжевая кнопка при наведении */
+    color: white; /* Белый текст при наведении */
+    border-color: #f39c12; /* Оранжевая окантовка при наведении */
+}
+

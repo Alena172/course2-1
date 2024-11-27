@@ -1,0 +1,84 @@
+@startuml
+' Устанавливаем стиль
+skinparam class {
+    BackgroundColor White
+    ArrowColor Black
+    BorderColor Black
+}
+
+' Определяем сущности
+
+entity User {
+    + id : Long [PK]
+    + name : String
+    + surname : String
+    + email : String [Unique]
+    + password : String
+    + phone : String [Unique]
+    + role : Role
+    + created_at : LocalDateTime
+}
+
+entity Course {
+    + id : Long [PK]
+    + title : String
+    + description : String
+    + duration : int
+    + price : BigDecimal
+    + category : String
+    + status : Status
+    + image : String
+    + instructor_id : Long [FK -> User.id]
+}
+
+entity Lesson {
+    + id : Long [PK]
+    + title : String
+    + course_id : Long [FK -> Course.id]
+}
+
+entity Block {
+    + id : Long [PK]
+    + type : BlockType
+    + title : String
+    + content : String
+    + lesson_id : Long [FK -> Lesson.id]
+}
+
+entity Enrollment {
+    + id : Long [PK]
+    + course_id : Long [FK -> Course.id]
+    + student_id : Long [FK -> User.id]
+    + status : Status
+    + enrollment_date : LocalDateTime
+}
+
+entity LessonProgress {
+    + id : Long [PK]
+    + lesson_id : Long [FK -> Lesson.id]
+    + user_id : Long [FK -> User.id]
+    + completed : Boolean
+}
+
+entity Certificate {
+    + id : Long [PK]
+    + course_id : Long [FK -> Course.id]
+    + user_id : Long [FK -> User.id]
+    + issue_date : LocalDateTime
+    + certificate_code : String [Unique]
+}
+
+' Определяем связи между сущностями
+
+User "1" -- "0..*" Enrollment : student
+User "1" -- "0..*" LessonProgress : progresses
+User "1" -- "0..*" Course : instructor
+
+Course "1" -- "0..*" Lesson : contains
+Course "0..*" -- "0..*" Enrollment : enrollments
+Course "0..*" -- "0..*" Certificate : certificates
+
+Lesson "1" -- "0..*" Block : contains
+Lesson "0..*" -- "0..*" LessonProgress : progresses
+
+@enduml
