@@ -8,9 +8,6 @@ import com.example.course2.repositories.EnrollmentRepository;
 import com.example.course2.services.CourseService;
 import com.example.course2.services.EnrollmentService;
 import com.example.course2.services.UserService;
-//import org.apache.pdfbox.pdmodel.common.PDRectangle;
-//import org.apache.pdfbox.pdmodel.font.PDTrueTypeFont;
-//import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.colors.ColorConstants;
 import com.itextpdf.kernel.font.PdfFont;
@@ -140,7 +137,7 @@ public class EnrollmentController {
         try (PdfWriter writer = new PdfWriter(response.getOutputStream())) {
             PdfDocument pdfDoc = new PdfDocument(writer);
             try (Document document = new Document(pdfDoc)) {
-                PdfFont font = PdfFontFactory.createFont("C:/Users/Alena/Downloads/course2/course2/src/main/resources/fonts/arialuni.ttf", PdfFontFactory.EmbeddingStrategy.PREFER_EMBEDDED);
+                PdfFont font = PdfFontFactory.createFont("fonts/arialuni.ttf", PdfFontFactory.EmbeddingStrategy.PREFER_EMBEDDED);
                 Paragraph title = new Paragraph("СЕРТИФИКАТ")
                         .setFont(font)
                         .setFontSize(36)
